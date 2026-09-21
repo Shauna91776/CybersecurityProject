@@ -11,12 +11,25 @@ def calculate_hash(file_path):
     return hash_object.hexdigest()
 
 
+def create_baseline(directory):
+    baseline = {}
+
+    for item in directory.iterdir():
+        if not item.is_file():
+            continue
+
+        file_hash = calculate_hash(item)
+        baseline[item.name] = file_hash
+
+    return baseline
+
+
 directory = Path("test_files")
 
-for item in directory.iterdir():
-    if item.is_file():
-        file_hash = calculate_hash(item)
-        print(item.name, file_hash)
+baseline = create_baseline(directory)
+
+print(baseline)
+                
     
 
 # text = "Hello World"

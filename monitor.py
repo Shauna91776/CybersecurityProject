@@ -1,4 +1,5 @@
 import hashlib
+import json
 from pathlib import Path
 
 
@@ -23,12 +24,18 @@ def create_baseline(directory):
 
     return baseline
 
+def save_baseline(baseline):
+    with open("baseline.json", "w") as file:
+        json.dump(baseline, file, indent=4)
+
 
 directory = Path("test_files")
 
 baseline = create_baseline(directory)
 
-print(baseline)
+save_baseline(baseline)
+
+print("Baseline created successfully.")
                 
     
 

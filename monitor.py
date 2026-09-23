@@ -61,13 +61,44 @@ def check_integrity(directory, baseline):
 
         
     
-    
-if __name__ == "__main__":
+def main():
     directory = Path("test_files")
 
-    baseline = load_baseline()
+    print("========================================")
+    print("       FILE INTEGRITY MONITOR")
+    print("========================================")
+    print()
+    print("1. Create baseline")
+    print("2. Check integrity")
+    print("3. Exit")
+    print()
 
-    check_integrity(directory, baseline)
+    choice = input("Select an option: ")
+
+    if choice == "1":
+        print("Creating baseline...")
+
+        baseline = create_baseline(directory)
+        save_baseline(baseline)
+
+        print("Baseline created successfully.")
+            
+
+    elif choice == "2":
+        print("Checking integrity...")
+
+        baseline = load_baseline()
+        check_integrity(directory, baseline)
+
+    elif choice == "3":
+        print("Exiting File Integrity Monitor.")
+
+    else:
+        print("Invalid option.")
+
+
+if __name__ == "__main__":
+    main()
     
     
                 

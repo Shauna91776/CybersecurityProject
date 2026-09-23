@@ -29,13 +29,56 @@ def save_baseline(baseline):
         json.dump(baseline, file, indent=4)
 
 
+
+def load_baseline():
+    with open("baseline.json", "r") as file:
+        return json.load(file)
+    
+def check_integrity(directory, baseline):
+    current_files = set()
+
+    for item in directory.iterdir():
+        if not item.is_file():
+            continue
+
+        current_files.add(item.name)
+
+        current_hash = calculate_hash(item)
+        expected_hash = baseline.get(item.name)
+
+        if expected_hash is None:
+            print(f"[WARNING] New file detected: {item.name}")
+        elif current_hash == expected_hash:
+            print(f"[OK] {item.name}")
+        else:
+            print(f"[WARNING] File modified: {item.name}")
+
+    for filename in baseline:
+        if filename not in current_files:
+            print(f"[WARNING] File deleted: {filename}")
+
+        
+    
+    
 directory = Path("test_files")
 
-baseline = create_baseline(directory)
+# baseline = create_baseline(directory)
 
-save_baseline(baseline)
+# save_baseline(baseline)
 
-print("Baseline created successfully.")
+# loaded_baseline = load_baseline()
+
+# print(loaded_baseline)    
+
+directory = Path("test_files")
+
+baseline = load_baseline()
+
+# save_baseline(baseline)
+
+check_integrity(directory, baseline)
+    
+    
                 
     
 

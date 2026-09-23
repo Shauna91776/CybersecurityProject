@@ -24,15 +24,15 @@ def create_baseline(directory):
 
     return baseline
 
-def save_baseline(baseline):
-    with open("baseline.json", "w") as file:
+def save_baseline(baseline, file_path="baseline.json"):
+    with open(file_path, "w") as file:
         json.dump(baseline, file, indent=4)
 
 
-
-def load_baseline():
-    with open("baseline.json", "r") as file:
+def load_baseline(file_path="baseline.json"):
+    with open(file_path, "r") as file:
         return json.load(file)
+    
     
 def check_integrity(directory, baseline):
     current_files = set()
@@ -56,27 +56,18 @@ def check_integrity(directory, baseline):
     for filename in baseline:
         if filename not in current_files:
             print(f"[WARNING] File deleted: {filename}")
+            
+
 
         
     
     
-directory = Path("test_files")
+if __name__ == "__main__":
+    directory = Path("test_files")
 
-# baseline = create_baseline(directory)
+    baseline = load_baseline()
 
-# save_baseline(baseline)
-
-# loaded_baseline = load_baseline()
-
-# print(loaded_baseline)    
-
-directory = Path("test_files")
-
-baseline = load_baseline()
-
-# save_baseline(baseline)
-
-check_integrity(directory, baseline)
+    check_integrity(directory, baseline)
     
     
                 
